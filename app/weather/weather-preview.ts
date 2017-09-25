@@ -1,43 +1,28 @@
-import { Component, Input, Inject } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { WeatherService } from './weather.service';
 
 @Component({
   selector: 'weather-preview',
   template: `
     <div class="weather-preview" *ngIf="weather">
-      <i [ngClass]="'wi ' + getIcon()"></i>
-      It's {{ getTemperature() }}°{{ weather.units.temperature }} in
-      <a [href]="'/#/weather/' + weather.location.country + '/' + weather.location.city">{{ weather.location.city }}</a>
+      <i [ngClass]="getIcon()"></i>
+      It's {{ weather.item.condition.temp }}°{{ weather.units.temperature }} in
+      {{ weather.location.city }}
       right now.
     </div>
   `
 })
 export class WeatherPreview {
+  @Input() weather;
 
-  @Input() weather = null;
+  constructor(private service: WeatherService) {}
 
-  constructor(@Inject('Weather') private Weather){}
-
-  /**
-   * Gets current Icon
-   * @return {String}
-   */
-  getIcon(): String {
-    if (!this.weather) {
-      return '';
-    }
-
-    return this.Weather.getIcon(this.weather.item.condition);
+  ngOnInit() {
+    console.log('this.service', this.service)
   }
 
-  /**
-   * Formats temperature
-   * @return {Number}
-   */
-  getTemperature(): Number {
-    if (!this.weather) {
-      return 0;
-    }
-
-    return parseInt(this.weather.item.condition.temp, 10);
+  getIcon() {
+    return 'wi ' + this.service.getIcon(this.weather.item.condition)
   }
 }
+

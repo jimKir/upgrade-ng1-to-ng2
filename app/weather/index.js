@@ -1,7 +1,6 @@
-import { upgradeAdapter } from '../ng2-upgrade';
-
 import { module } from 'angular';
 export const weatherModule = 'app.weather';
+import { downgradeComponent, downgradeInjectable } from '@angular/upgrade/static';
 
 
 import { WeatherService } from './weather.service';
@@ -12,10 +11,10 @@ import { routes } from './routes';
 
 module(weatherModule, [])
   .config(routes)
-  .service('Weather', WeatherService)
-  .service('WeatherService', WeatherService)
+  .service('Weather', downgradeInjectable(WeatherService))
   .controller('MainController', MainController)
   .controller('WeatherController', WeatherController)
-  .directive('weatherPreview', upgradeAdapter.downgradeNg2Component(WeatherPreview));
-
-upgradeAdapter.upgradeNg1Provider('Weather');
+  .directive('weatherPreview', downgradeComponent({
+    component: WeatherPreview,
+    inputs: ['weather'],
+  }))
