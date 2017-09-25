@@ -8,9 +8,7 @@
     "start-offline": "OFFLINE=1 npm start",
     "bundle": "gulp bundle",
     "gh-pages": "npm run bundle && npm run deploy:github-pages",
-    "deploy:github-pages": "git subtree push --prefix public origin gh-pages",
-    "typings:install": "typings install",
-    "postinstall": "npm run typings:install"
+    "deploy:github-pages": "git subtree push --prefix public origin gh-pages"
   },
   "author": "Sergio Cruz <hello@sergiocruz.me>",
   "license": "MIT",
