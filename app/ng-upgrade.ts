@@ -13,10 +13,7 @@ import { WeatherService } from './weather/weather.service'
         BrowserModule,
         UpgradeModule,
         HttpModule,
-    ],
-    declarations: [ WeatherPreview ],
-    entryComponents: [ WeatherPreview ],
-    providers: [ WeatherService ],
+    ]
 })
 export class AppModule {
     ngDoBootstrap() {}
